@@ -44,6 +44,7 @@ const Navbar = () => {
                     onMouseLeave={() => setIsHoveredRecipes(false)} 
                     to='/recipes'>Recipes</Link> {/* קישור חדש למתכונים */}
             </Typography>
+            
         </nav>
     );
 }

@@ -6,7 +6,7 @@ import { Container, Typography, List, ListItem, Card, CardContent } from '@mui/m
 
 const RecipeDetails = () => {
     const { id } = useParams<{ id: string }>();
-    const { recipes: { list: recipesList } } = useSelector((store: StoreType) => store);
+    const { recipes: { recipes: recipesList } } = useSelector((store: StoreType) => store);
     const recipe = recipesList.find(r => r?.id && r.id.toString() === id);
 
     if (!recipe) {

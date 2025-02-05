@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Recipe } from "../types/recipeType";
-
+import { Recipe } from '../types/recipeType';
+//import { Recipe } from "../types/recipeType";
+const url = 'http://localhost:3000/api/recipes'
 // Define an async thunk for fetching recipes from the server
 export const fetchRecipes = createAsyncThunk<Recipe[], void>(
     'recipes/fetchRecipes',
     async (_, thunkAPI: { rejectWithValue: (arg0: string) => any; }) => {
         try {
-            const response = await axios.get('http://localhost:3000/api/recipes'); // Replace with your API endpoint
+            const response = await axios.get( url); // Replace with your API endpoint
             return response.data; // Assuming the server returns an array of recipes
         } catch (error: any) {
             // Handle known errors
@@ -27,6 +28,40 @@ export const fetchRecipes = createAsyncThunk<Recipe[], void>(
         }
     }
 );
+// export const createRecipe = createAsyncThunk<Recipe, Recipe>(
+//     'recipes/createRecipe',
+//     async (newRecipe, thunkAPI) => {
+//         try {
+//             const response = await axios.post( url, newRecipe);
+//             return response.data;
+//         } catch (error: any) {
+//             return thunkAPI.rejectWithValue('Error creating recipe');
+//         }
+//     }
+// );
+
+export const addRecipe = createAsyncThunk('recipes/add',
+    async (recipe: Recipe, thunkAPI) => {
+        try {
+            const response = await axios.post(url, 
+            {
+                title: recipe.title,
+                description: recipe.description,
+                ingredients: recipe.ingredients,
+                instructions: recipe.instructions
+            },{
+                headers: {
+                    "user-id": "" + recipe.authorId
+                }
+            }
+            )
+            return response.data.recipe
+        }
+        catch (e: any) {
+            return thunkAPI.rejectWithValue(e.message)
+        }
+    }
+)
 
 // Create the slice
 const recipesSlice = createSlice({
@@ -50,7 +85,13 @@ const recipesSlice = createSlice({
             .addCase(fetchRecipes.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string; // Use the error message from the rejected action
+            })
+           
+            .addCase(addRecipe.fulfilled, (state, action) => {
+                state.recipes.push(action.payload);
             });
+    
+
     },
 });
 

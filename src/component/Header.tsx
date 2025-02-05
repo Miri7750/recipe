@@ -5,10 +5,11 @@ import { Outlet } from 'react-router';
 import { createContext, Dispatch, useReducer, useState } from 'react';
 import Avatar from './Avatar';
 import Navbar from './Navbar';
-import UpdateDetails from './UpdateDetails';
+import UpdateDetails from './RecipeDetails';
 import Login from './login';
 import { action, actionUser } from '../types/userActionType';
 import { UserType } from '../types/userType';
+import AddRecipe from './AddRecipe';
 
 export const UsrReducer = createContext<{ user: UserType, userDispatch: Dispatch<action> }>(
     {
@@ -32,8 +33,8 @@ const Header = () => {
     const [isLogin, setIsLogin] = useState(false)
     
     return (
-        <IsLogin.Provider value={[isLogin, setIsLogin]}>
-            <UsrReducer.Provider value={{ user, userDispatch }} >
+        <IsLogin  value={[isLogin, setIsLogin]}>
+            <UsrReducer  value={{ user, userDispatch }} >
                 <Box sx={{ flexGrow: 1 }}>
                     <AppBar position="static">
                         <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -42,6 +43,7 @@ const Header = () => {
                                 {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}> */}
                                     {isLogin && <Avatar />}
                                     {isLogin && <UpdateDetails />}
+                                    {isLogin && <AddRecipe />}
                                 {/* </div> */}
                             </Box>
 
@@ -50,10 +52,12 @@ const Header = () => {
                             </Box>
                         </Toolbar>
                     </AppBar>
+                  
                     <Outlet />
+                    
                 </Box>
-            </UsrReducer.Provider>
-        </IsLogin.Provider>
+            </UsrReducer >
+        </IsLogin >
     );
 }
 

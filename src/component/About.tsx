@@ -1,4 +1,4 @@
-const abuot = () => {
+const About = () => {
     return (<>
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
             <h1>abuot</h1>
@@ -13,4 +13,4 @@ const abuot = () => {
 
     </>)
 }
-export default abuot
+export default About
