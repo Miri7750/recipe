@@ -5,7 +5,7 @@ import { Outlet } from 'react-router';
 import { createContext, Dispatch, useReducer, useState } from 'react';
 import Avatar from './Avatar';
 import Navbar from './Navbar';
-import UpdateDetails from './RecipeDetails';
+import UpdateDetails from './UpdateDetails';
 import Login from './login';
 import { action, actionUser } from '../types/userActionType';
 import { UserType } from '../types/userType';
@@ -40,11 +40,9 @@ const Header = () => {
                         <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Box>
                                 {!isLogin && <Login />}
-                                {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}> */}
                                     {isLogin && <Avatar />}
                                     {isLogin && <UpdateDetails />}
                                     {isLogin && <AddRecipe />}
-                                {/* </div> */}
                             </Box>
 
                             <Box>

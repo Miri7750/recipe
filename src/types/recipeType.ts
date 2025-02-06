@@ -21,6 +21,6 @@ export  const emptyRecipe = {
 export type Fields = {
     title: string,
     description: string,
-    // ingredients:string[],
+    ingredients:string[],
     instructions: string,
 }

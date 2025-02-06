@@ -7,7 +7,7 @@
 
 // function App() {
 //   useEffect(() => {
-//     document.title = `ruchami sova project`;
+//     document.title = `my recipes project`;
 //   });
 //   return (
 //     <>
