@@ -1,26 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Recipe } from '../types/recipeType';
-//import { Recipe } from "../types/recipeType";
 const url = 'http://localhost:3000/api/recipes'
-// Define an async thunk for fetching recipes from the server
 export const fetchRecipes = createAsyncThunk<Recipe[], void>(
     'recipes/fetchRecipes',
-    async (_, thunkAPI: { rejectWithValue: (arg0: string) => any; }) => {
+    async (_, thunkAPI) => {
         try {
-            const response = await axios.get( url); // Replace with your API endpoint
-            return response.data; // Assuming the server returns an array of recipes
+            const response = await axios.get( url); 
+            return response.data; 
         } catch (error: any) {
-            // Handle known errors
             if (axios.isAxiosError(error)) {
                 if (error.response) {
-                    // The request was made and the server responded with a status code
                     if (error.response.status === 401) {
                         return thunkAPI.rejectWithValue('Unauthorized access - please log in.');
                     }
                     return thunkAPI.rejectWithValue(`Error: ${error.response.data.message}`);
                 } else if (error.request) {
-                    // The request was made but no response was received
                     return thunkAPI.rejectWithValue('No response received from server.');
                 }
             }
@@ -28,17 +23,6 @@ export const fetchRecipes = createAsyncThunk<Recipe[], void>(
         }
     }
 );
-// export const createRecipe = createAsyncThunk<Recipe, Recipe>(
-//     'recipes/createRecipe',
-//     async (newRecipe, thunkAPI) => {
-//         try {
-//             const response = await axios.post( url, newRecipe);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue('Error creating recipe');
-//         }
-//     }
-// );
 
 export const addRecipe = createAsyncThunk('recipes/add',
     async (recipe: Recipe, thunkAPI) => {
@@ -63,7 +47,6 @@ export const addRecipe = createAsyncThunk('recipes/add',
     }
 )
 
-// Create the slice
 const recipesSlice = createSlice({
     name: 'recipes',
     initialState: {
@@ -84,16 +67,15 @@ const recipesSlice = createSlice({
             })
             .addCase(fetchRecipes.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload as string; // Use the error message from the rejected action
+                state.error = action.payload as string; 
             })
            
             .addCase(addRecipe.fulfilled, (state, action) => {
-                state.recipes.push(action.payload);
+                state.recipes = [...state.recipes, {...action.payload}]
             });
     
 
     },
 });
 
-// Export the actions and reducer
 export default recipesSlice.reducer;

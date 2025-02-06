@@ -9,7 +9,7 @@ import UpdateDetails from './UpdateDetails';
 import Login from './login';
 import { action, actionUser } from '../types/userActionType';
 import { UserType } from '../types/userType';
-import AddRecipe from './AddRecipe';
+
 
 export const UsrReducer = createContext<{ user: UserType, userDispatch: Dispatch<action> }>(
     {
@@ -42,7 +42,8 @@ const Header = () => {
                                 {!isLogin && <Login />}
                                     {isLogin && <Avatar />}
                                     {isLogin && <UpdateDetails />}
-                                    {isLogin && <AddRecipe />}
+                                    {isLogin&& user.firstName }
+                                    {/* {isLogin && <AddRecipe />} */}
                             </Box>
 
                             <Box>

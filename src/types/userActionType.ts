@@ -20,11 +20,10 @@ export const actionUser = (state: UserType, action: action) => {
         case 'LOGIN':
             return { ...state, ...action.data}
         case 'DELETE_USER':
-            //go to home!!
         case 'UPDATE':
             state = { ...state, ...action.data }
             return state
-        default://'GET'
+        default:
             return state
     }
 }

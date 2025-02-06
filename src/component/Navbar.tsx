@@ -1,6 +1,8 @@
-import { Typography } from "@mui/material"
-import { useState } from "react";
+import { Button, Typography } from "@mui/material"
+import { useContext, useState } from "react";
 import { Link } from "react-router";
+import AddRecipe from "./AddRecipe";
+import { UsrReducer } from "./Header";
 
 const Navbar = () => {
     const buttonStyle: React.CSSProperties = {
@@ -19,10 +21,12 @@ const Navbar = () => {
     const hoverStyle: React.CSSProperties = {
         backgroundColor: '#0056b3',
     }
+    const user = useContext(UsrReducer)
     
     const [isHoveredHome, setIsHoveredHome] = useState(false);
     const [isHoveredAbout, setIsHoveredAbout] = useState(false);
-    const [isHoveredRecipes, setIsHoveredRecipes] = useState(false); // הוספת מצב חדש עבור מתכונים
+    const [isHoveredRecipes, setIsHoveredRecipes] = useState(false);
+    const [isHoveredAddRecipes, setIsHoveredAddRecipes] = useState(false);
 
     return (
         <nav>
@@ -40,11 +44,18 @@ const Navbar = () => {
             </Typography>
             <Typography variant="h6" component="div" sx={{ flexGrow: 0 }}>
                 <Link style={{ ...buttonStyle, ...(isHoveredRecipes ? hoverStyle : {}) }}
-                    onMouseEnter={() => setIsHoveredRecipes(true)} // ניהול hover
+                    onMouseEnter={() => setIsHoveredRecipes(true)} 
                     onMouseLeave={() => setIsHoveredRecipes(false)} 
-                    to='/recipes'>Recipes</Link> {/* קישור חדש למתכונים */}
+                    to='/recipes'>Recipes</Link> 
             </Typography>
-            
+            {user.user.id!=0 &&
+            <Typography variant="h6" component="div" sx={{ flexGrow: 0 }}>
+                <Button style={{ ...buttonStyle, ...(isHoveredAddRecipes ? hoverStyle : {}) }}
+                    onMouseEnter={() => setIsHoveredAddRecipes(true)} 
+                    onMouseLeave={() => setIsHoveredAddRecipes(false)} 
+                    ><AddRecipe/>
+    </Button>
+            </Typography>}
         </nav>
     );
 }

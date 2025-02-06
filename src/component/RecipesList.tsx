@@ -1,18 +1,15 @@
 
-import React, { useContext, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RecipeDispatch, StoreType } from '../store/store';
 import { Box, List, ListItem, ListItemText, CircularProgress, Typography } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom';
 import { fetchRecipes } from '../store/recipesSlice';
 import { Recipe } from '../types/recipeType'; 
-import { IsLogin } from '../App';
-import AddRecipe from './AddRecipe';
 
 const RecipesList: React.FC = () => {
     const dispatch = useDispatch<RecipeDispatch>(); 
-    const { recipes, loading, error } = useSelector<StoreType, { recipes: Recipe[], loading: boolean, error: string | null }>((store) => store.recipes); // הגדרת סוגים
- const isLogin=useContext(IsLogin)
+    const { recipes, loading, error } = useSelector<StoreType, { recipes: Recipe[], loading: boolean, error: string | null }>((store) => store.recipes);
     useEffect(() => {
         dispatch(fetchRecipes());
     }, [dispatch]);
@@ -25,13 +22,12 @@ const RecipesList: React.FC = () => {
          <Box flex={1} p={2}>
                 <Typography variant="h6">בחר מתכון כדי לראות את הפרטים</Typography>
             </Box>
-            {isLogin && <AddRecipe />}
             <Box flex={1} p={2}>
                 <List>
                     {recipes.length === 0 ? (
                         <Typography>No recipes available</Typography>
                     ) : (
-                        recipes.map((recipe: Recipe) => ( // הגדרת סוג עבור recipe
+                        recipes.map((recipe: Recipe) => ( 
                             <ListItem key={recipe.id}>
                                 <Link to={`/recipes/${recipe.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                     <ListItemText primary={recipe.title} />
@@ -40,7 +36,9 @@ const RecipesList: React.FC = () => {
                         ))
                     )}
                 </List>
+            {/* {isLogin&&<AddRecipe />} */}
             </Box>
+            
           <Outlet/>
         </Box>
     );

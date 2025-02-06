@@ -1,24 +1,4 @@
-// import { useEffect } from 'react';
-// import { router } from './Router';
-// import { Outlet, RouterProvider } from 'react-router';
-// import { Provider } from 'react-redux';
-// import store from './store/stor';
-// // import Header from './component/Heder';
 
-// function App() {
-//   useEffect(() => {
-//     document.title = `my recipes project`;
-//   });
-//   return (
-//     <>
-//      <Provider store={store}>
-//                <RouterProvider router={router} />
-//             </Provider>
-//     </>
-//   )
-// }
-
-// export default App
 
 import { RouterProvider } from 'react-router'
 import './App.css'
